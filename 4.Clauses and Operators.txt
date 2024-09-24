@@ -1,0 +1,229 @@
+DISTINCT clause
+ORDER BY clause
+Arithematic Operators
+
+Ex  table and records:
+
+create table departments
+(
+did number(2),
+dname  varchar2(20),
+city   varchar2(20)
+);
+
+insert into departments
+values(10,'Production','Dallas');
+insert into departments
+values(10,'Production','Dallas');
+insert into departments
+values(10,'Production','Dallas');
+insert into departments
+values(10,'Production','Dallas');
+insert into departments
+values(10,'Production','Dallas');
+insert into departments
+values(10,'Production','Dallas');
+
+insert into departments 
+values(20,'Sales','Texas');
+insert into departments 
+values(20,'Sales','Texas');
+insert into departments 
+values(20,'Sales','Texas');
+insert into departments 
+values(20,'Sales','Texas');
+
+insert into departments
+values(30,'Finance','Chicago');
+insert into departments
+values(30,'Finance','Chicago');
+insert into departments
+values(30,'Finance','Chicago');
+insert into departments
+values(30,'Finance','Chicago');
+insert into departments
+values(30,'Finance','Chicago');
+
+
+
+DISTINCT clause:
+****************
+It will display unique values from the column.
+It will also display unique records from the table.
+
+
+syn:	
+   select    DISTINCT  colname1,colname2,.... / * 
+   from <table>;
+
+Ex:	display list of different designitions?
+
+	select distinct(desg) " list of jobs"  from emp_info;
+
+
+list of jobs      
+--------------------
+salesman             
+developer            
+clerk                
+admin  
+
+
+Ex:
+
+	dept
+did	dname		city
+
+10	production	chicago
+20	Sales		Texas
+10	production	chicago
+30	Finance		Dallas
+30	Finance		Dallas
+
+
+Ex:	display distinct department names?
+
+	select distinct(dname) from dept;
+
+output:
+	Production
+	Sales
+	Finance
+
+Ex:	Get unique records from the above table?
+		or 
+	Display records from the above table without duplicates?
+
+	select distinct did,dname,city  from dept; 
+
+
+10	production	chicago
+20	Sales		Texas
+30	Finance		Dallas
+-----------------------------------------------------------------------------------------
+
+ORDER BY Clause:
+****************
+Used to display the column data or table data in 
+ascending / descending or sorting [ a to z] / 
+reverse sorting [z-a] order data.             
+
+syntax:	
+select  col1,..... / *
+from TBLname
+order by col1, col2,...... [asc / desc ];
+
+
+Note:	
+By default it will display a to z data or ascending 
+order data.
+
+
+
+Ex:	Display employee names in alphabetical(sorting) order?
+
+	select ename from emp ORDER BY ename;
+
+sample output:
+ENAME      
+---------- 
+ADAMS 
+ALLEN 
+BLAKE 
+CLARK 
+FORD ...
+
+Ex:	Display employee names in reverse order?
+
+	select ename from emp ORDER BY ename DESC;
+
+
+sample output:
+
+ENAME      
+---------- 
+WARD 
+TURNER 
+SMITH 
+SCOTT 
+MILLER ...
+
+
+Ex:	display ename,sal, desg on the order of salary?
+
+	select ename, sal,job from emp order by sal;
+			OR
+	select ename, sal,job from emp order by 2;
+sample output:
+
+ENAME      SAL                    JOB       
+---------- ---------------------- --------- 
+SMITH 		800               CLERK 
+JAMES 		950               CLERK 
+ADAMS 		1100             CLERK 
+WARD 		1250             SALESMAN 
+MARTIN 		1250             SALESMAN
+
+
+
+
+ORDER BY clause on more than one column:
+
+
+	Here the first priority of order by clause given to first column, if first column having duplicates then order 	by priority goes to second column and so on.
+
+Ex:	display sal and ename from emp based on order of salaries?
+
+	select sal,ename from emp order by sal;
+
+sample output:
+
+SAL                    ENAME      
+---------------------- ---------- 
+800               SMITH 
+950               JAMES 
+1100             ADAMS 
+1250             WARD-------> 
+1250             MARTIN ---->
+1300             MILLER 
+1500             TURNER 
+1600             ALLEN 
+2450             CLARK 
+2850             BLAKE 
+2975             JONES 
+3000             SCOTT----> 
+3000             FORD ---->
+5000             KING 
+
+
+Ex:	display sal and ename from emp based on order of salaries and employee names?
+
+	select sal,ename from emp order by sal,ename;
+
+sample output:
+
+SAL                    ENAME      
+---------------------- ---------- 
+800               SMITH 
+950               JAMES 
+1100             ADAMS 
+1250             MARTIN ------>
+1250             WARD -------->
+1300             MILLER 
+1500             TURNER 
+1600             ALLEN 
+2450             CLARK 
+2850             BLAKE 
+2975             JONES 
+3000             FORD ------>
+3000             SCOTT ----->
+5000             KING 
+
+-----------------------------------------------------------------------------------------
+
+--> get enames in reverse order?
+--> get emp data like latest emp to the old employee?
+--> get students info like younger student to the older?
+--> get product data like latest product to the old product?
+--> get student data without duplicate records?
+--> get student names and mobile numbers?

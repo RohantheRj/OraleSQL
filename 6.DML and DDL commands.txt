@@ -1,0 +1,753 @@
+--DML COMMANDS
+	Insert 		
+	Update
+	Delete		
+
+--DDL COMMANDS
+	Create		Alter		
+	Drop		Truncate
+	RENAME
+
+
+DML COMMANDS:
+
+UPDATE
+******	
+used to change old values with new values with in the table.
+We can make updations either in single column or multiple columns
+at time.
+
+Note:	
+By default UPDATE command updates all values in the column.
+
+
+Updating single column value:
+*****************************
+syn:	
+update <table_name>
+set 
+colname= value /expression/select Query/function/null
+[where <condition>];
+
+
+Updating multiple column values:
+********************************
+syn:	update <table_name>
+	set colname1= value / expression,
+	      colname2= value / expression,
+                colname3= value / expression,
+		:
+  	[where <condition>];
+
+Ex:
+update emp
+set sal=2000
+where empno=7654;
+
+Ex:-update the commission of 7369 as 500?
+
+update emp set comm=500 where empno=7369;
+
+
+Ex:-update  all emps commissions as 1000?
+
+update emp set comm=1000;
+
+Ex:-
+update the salesman salary with 20% increment , change their designition as Sr.SALES ?
+
+	update emp
+	set sal=sal+(0.20*sal),
+	    job='Sr.SALES'
+	where job='SALESMAN';
+
+Ex: update prod_dtls
+    set cost=cost+(0.16*cost)
+    where prod_name in('LAPTOP','DESKTOP');
+
+Ex:
+update emp
+set sal=sal+(0.20*sal),
+    job='ADMIN'
+where job='CLERK' AND SAL>=1000;
+
+Ex:
+update emp
+set 
+sal=(select sal from emp where job='PRESIDENT')
+where empno=7788;
+----------------------------------------------------------------------------------------
+
+DELETE
+******	
+It is used to delete the records from the table. 
+By default it deletes all the records.
+
+   syn:	
+   DELETE FROM  <table_name> 
+   where <cond>;
+
+Ex:	
+delete all customer details?
+
+delete from cust_dtls;
+
+ex:	
+delete employees information who is not getting 
+any commission?
+
+delete from emp where comm is null;
+
+Note:	
+WE can get the back the deleted records / data with in 
+the current session by using ROLLBACK.
+
+Examples:
+
+select * from sample;
+
+update sample set comm=500 where empno=7369;
+
+update sample set comm=1000;
+
+update sample set sal=sal+(0.20*sal),comm=500 where job='SALESMAN';
+
+--Delete employee whose deptno is unknown?
+
+delete from sample where deptno is null;
+
+delete from sample;
+
+
+insert into sample values(1234,'dinesh','developer',null,'12-may-10',5000,2300,40);
+
+----------------------------------------------------------------------------------------
+
+TRANSACTION CONTROL LANGUGE COMMANDS:
+*************************************
+
+Generally, DML operations [insert/update /delete] 
+on table data are considered as transactions.
+
+
+1) COMMIT
+It is used to make permanent all user transactions 
+(DML operations) on the table.
+
+Note:	 
+Once a transaction made permanent then 
+we cannot cancel it.
+
+2) ROLLBACK
+It is used to cancel all user transactions. 
+By default ROLLBACK cancel all transactions
+in the current login session.
+
+
+3) SAVEPOINT
+It is Used to save a set of transactions
+under a name.
+
+	SAVEPOINT  <name>;
+
+
+Examples:
+
+create table cust
+(
+cid  char(3),
+cname  varchar2(20)
+);
+
+insert into cust values('c00','Sanju');
+insert into cust values('c01','Manoj');
+
+select * from cust;
+
+rollback;
+
+select * from cust;
+
+insert into cust values('c00','Sanju');
+insert into cust values('c01','Manoj');
+
+commit;
+select * from cust;
+
+rollback;
+select * from cust;
+
+
+Ex-2:
+
+Insert into cust values('c02','hellen');
+delete from cust where cname='Sanju';
+savepoint s1;
+update cust set cid='c99' where cname='hellen';
+savepoint s2;
+
+delete from cust;
+
+select * from cust;
+
+rollback to s2; [ It will cancel transactions after "S2"]
+
+rollback; [ It will cancel all transactions by default ]
+
+
+-----------------------------------------------------------------------------------------
+
+DDL COMMANDS:-	
+CREATE 		ALTER 		DROP		
+RENAME		TRUNCATE
+
+
+2) ALTER
+*********
+It is used to change the structure of the table by
+
+-->Adding new columns------------------ADD
+-->Deleting existed columns------------DROP COLUMN
+-->Changing column name ---------------RENAME COLUMN
+-->Changing size /datatype-------------MODIFY
+-->Change table name-------------------RENAME TO
+
+
+i) 
+syn:  FOR ADDING COLUMNS
+	
+Alter Table <table_name> 
+ADD 					
+(
+<col_1> datatype(size),
+<col_2> datatype(size),
+---
+---
+);
+
+Note:
+Only columns can be added at end of old columns.
+
+
+eX: gender and mobile number
+	alter table cust
+	add
+	(
+	gender   char,
+	mobile  number(10)
+	);
+
+
+ii) Deleting existed columns
+
+syn:	
+	Alter Table <table_name> 
+	DROP COLUMN <col_name>;
+
+Ex: delete customer id column
+
+alter table cust
+drop column cid;
+
+
+
+iii) changing datatype and size  
+     (increasing / decreasing) of column
+
+syn:	
+Alter Table   <table_name> 
+MODIFY <colname> new_datatype(new_size);
+
+
+Note:
+A)If the column is empty then we can do the following
+
+-->We can change from any data type to any data type.
+-->We can increase or decrease column size.
+
+B) If column is not empty then,
+
+-->Number type and CHAR type column size cannot 
+  be decreased, but it can be increased.
+-->we cannot change the column data type.
+	
+
+Ex: 
+alter table cust
+modify  cname varchar2(20);
+
+
+iv) CHANGE COLUMN NAME
+
+syn:	Alter Table <table_name>
+	RENAME COLUMN <oldcolname> 
+	TO <newcolname>;
+
+Ex:	alter table emp 
+	rename column ename to empnames;
+
+v) Changing table name
+
+syn:
+alter table <table_name>
+RENAME TO <new table name>;
+
+
+
+3) DROP
+********
+we can delete any data base object.
+
+How to delete a table along with data and structure?
+
+Syn:
+drop table <table_name>;
+
+Ex:  delete cust_dtls table?
+
+drop table cust_dtls;
+
+
+4) RENAME 
+*********
+	It is used to change table name.
+
+syn: 
+RENAME  <oldname> TO <new tablename>;
+
+Ex: change the table name customers as cust_dtls?
+
+RENAME customers TO cust_dtls;
+
+EX: change the EMP table name as EMPLOYEE?
+
+rename emp to employee;
+
+
+
+5) TRUNCATE
+***********
+It deletes all the data from the table, 
+it cannot  deletes the partial data from a table.
+Here the deletion is permanent .
+we cannot get back deleted data.
+
+syn:	truncate table <table_name>;
+
+Ex:	truncate table customers;
+
+
+
+
+Ex:	
+let us consider a table stud_dtls with columns rno ,sname,  fee
+
+
+			stud_dtls
+			---------
+	rno		sname			fee
+		
+	number(2)	varchar2(5)		number(5)
+
+
+
+
+Ex:	change the above table to maintain course name for each student?
+
+	alter table stud_dtls add course_name varchar2(10);
+
+
+Ex:	change the above table to maintain gender and mobile number for each student?
+
+	alter table stud_dtls add ( gender  char, mobile  number(10));
+
+
+Ex:	from the above table delete student mobile number column?
+
+	alter table stud_dtls drop column mobile;
+
+
+Ex:	increase the student name column size to 20?
+
+	alter table stud_dtls modify  sname varchar2(20);
+
+
+Ex:	change the name of column sname to stud_name?
+
+	alter table stud_dtls RENAME sname to  STUD_NAME;
+
+
+Ex:
+create table student 
+(
+rno  number(2),
+name varchar2(5),
+fee   number(5)
+);
+
+insert into student values(1,'a','12000');
+insert into student values(2,'x','10000');
+
+alter table student add mobile number(10);
+
+select * from student;
+
+update student set mobile=9898989898 where rno=1;
+
+alter table student add (gender  char, course varchar2(10));
+
+select * from student;
+
+alter table student drop column mobile;
+
+select * from student;
+
+update student set course='oracle';
+
+select * from student;
+
+insert into student values(3,'abc','11000','m','Unix &Scripting');
+
+delete from student where course='Unixnull';
+
+alter table student modify course  varchar2(20);
+
+alter table student modify fee number(5);
+
+alter table student rename column rno to rollno;
+
+
+
+
+note:
+
+--If the table is empty then we can change the column datatype from any type to any type.
+
+--If the table is not empty then,
+	--number type data can be change to char but reverse is not possible
+	--number type column size can be incresed but not decreased
+	--Increasing / Decreasing of char/ varchar2 data type is possible.
+
+
+
+
+Ex:	drop table stud_dtls;	
+
+
+
+
+================================================================
+Hands_on:
+
+SQL> CREATE TABLE T1
+  2  (
+  3  RNO  NUMBER(3),
+  4  NAME  VARCHAR2(20)
+  5  );
+
+Table created.
+
+SQL> insert into t1 values(10,'dinesh');
+
+1 row created.
+
+SQL> insert into t1 values(20,'sravya');
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from t1;
+
+       RNO NAME
+---------- --------------------
+        10 dinesh
+        20 sravya
+
+SQL> alter table t1 add gender char;
+
+Table altered.
+
+SQL> select * from t1;
+
+       RNO NAME                 G
+---------- -------------------- -
+        10 dinesh
+        20 sravya
+
+SQL> alter table t1
+  2  add
+  3  mobile  number(10),
+  4  mail    varchar2(20)
+  5  ;
+mobile  number(10),
+                  *
+ERROR at line 3:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> alter table t1
+  2  add
+  3   (mobile  number(10),
+  4  mail    varchar2(20)
+  5  );
+
+Table altered.
+
+SQL> select * from t1;
+
+       RNO NAME                 G     MOBILE MAIL
+---------- -------------------- - ---------- --------------------
+        10 dinesh
+        20 sravya
+
+SQL> alter table t1 drop column rno;
+
+Table altered.
+
+SQL> select * from t1;
+
+NAME                 G     MOBILE MAIL
+-------------------- - ---------- --------------------
+dinesh
+sravya
+
+SQL> update t1 set gender='M',mobile=7878787878,mail='d@gmail.com'
+  2  where name='dinesh';
+
+1 row updated.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from t1;
+
+NAME                 G     MOBILE MAIL
+-------------------- - ---------- --------------------
+dinesh               M 7878787878 d@gmail.com
+sravya
+
+SQL> alter table t1 modify mobile char(10);
+alter table t1 modify mobile char(10)
+                      *
+ERROR at line 1:
+ORA-01439: column to be modified must be empty to change datatype
+
+
+SQL> alter table t1 modify mobile number(15);
+
+Table altered.
+
+SQL> alter table t1 modify mobile number(11);
+alter table t1 modify mobile number(11)
+                      *
+ERROR at line 1:
+ORA-01440: column to be modified must be empty to decrease precision or scale
+
+
+SQL> alter table t1 add srno  number(2);
+
+Table altered.
+
+SQL> select * from t1;
+
+NAME                 G     MOBILE MAIL                       SRNO
+-------------------- - ---------- -------------------- ----------
+dinesh               M 7878787878 d@gmail.com
+sravya
+
+SQL> alter table t1 modify srno number(1);
+
+Table altered.
+
+SQL> alter table t1 modify srno number(5);
+
+Table altered.
+
+SQL> alter table t1 modify mail varchar2(15);
+
+Table altered.
+
+
+SQL> alter table t1 modify mail varchar2(11);
+
+Table altered.
+
+SQL> alter table t1 modify mail varchar2(10);
+alter table t1 modify mail varchar2(10)
+                      *
+ERROR at line 1:
+ORA-01441: cannot decrease column length because some value is too big
+
+
+SQL>
+
+SQL> select srno,mobile,name,mail from t1;
+
+      SRNO     MOBILE NAME                 MAIL
+---------- ---------- -------------------- -----------
+           7878787878 dinesh               d@gmail.com
+                      sravya
+
+SQL> select * from t1;
+
+NAME                 G     MOBILE MAIL              SRNO
+-------------------- - ---------- ----------- ----------
+dinesh               M 7878787878 d@gmail.com
+sravya
+
+SQL>
+
+SQL> alter table t1 rename column name to  Stud_name;
+
+Table altered.
+
+SQL> select * from t1;
+
+STUD_NAME            G     MOBILE MAIL              SRNO
+-------------------- - ---------- ----------- ----------
+dinesh               M 7878787878 d@gmail.com
+sravya
+
+SQL> drop table t1;
+
+Table dropped.
+
+---------------------------------------------------------------
+
+
+
+
+Ex:	let us consider a table stud_dtls with columns rno ,sname,  fee
+
+
+			stud_dtls
+			---------
+	rno		sname			fee
+		
+	number(2)	varchar2(5)		number(5)
+
+
+
+
+Ex:	change the above table to maintain course name for each student?
+
+	alter table stud_dtls add course_name varchar2(10);
+
+
+Ex:	change the above table to maintain gender and mobile number for each student?
+
+	alter table stud_dtls add ( gender  char, mobile  number(10));
+
+
+Ex:	from the above table delete student mobile number column?
+
+	alter table stud_dtls drop column mobile;
+
+
+Ex:	increase the student name column size to 20?
+
+	alter table stud_dtls modify  sname varchar2(20);
+
+
+Ex:	change the name of column sname to stud_name?
+
+	alter table stud_dtls RENAME sname to  STUD_NAME;
+
+
+note:
+
+--If the table is empty then we can change the column datatype from any type to any type.
+
+--If the table is not empty then,
+	--number type data can be change to char but reverse is not possible
+	--number type column size can be incresed but not decreased
+	--Increasing / Decreasing of char/ varchar2 data type is possible.
+
+
+
+
+Ex:	drop table stud_dtls;	
+
+
+=========================================================================================
+
+
+DCL commands: [ Data Control Language commands ]
+*************************************************
+By using these commands the DBA can assign permissions or 
+get back permissions  to / from the users on the data base 
+objects.
+
+GRANT
+*****
+It is used to assign permissions.
+
+syn:	
+GRANT  <Privillage list>  
+On <objectName>  
+TO <username>;
+
+
+REVOKE
+******	
+By Using this command, DBA can getback or cancel 
+permissions.
+
+syn:	
+REVOKE <Previllage List>  
+On     <objectName>
+FROM   <username>;
+
+
+PREVILLAGE LIST:
+Previllages are known as permissions.
+
+SELECT
+INSERT
+UPDATE
+DELETE
+CREATE [TABLE/VIEW/INDEX/SYNONYM]
+ALTER [TABLE/VIEW/SEQUENCE]
+DROP  [TABLE/VIEW/INDEX/SEQUENCE/SYNONYM]
+
+
+
+
+Ex:
+			
+					ORCL
+					  |
+				-------------------------
+				|			|
+				USER_1			USER_2
+				|			|
+			__________________		__________________
+			|		|		|		|
+			Products	companies	customers	sales
+
+
+Ex:	Assign SELECT previllage to the user-2 on the table PRODUCTS created by USER-1
+
+	GRANT  SELECT  ON ORCL.USER_1.PRODUCTS TO USER_2;
+
+
+Ex:	How do i cancel the above permission?
+
+	REVOKE SELECT  ON ORCL.USER_1.PRODUCTS FROM USER-2;
+
+
+Ex:	How to assign CREATE VIEW permission to user-2?
+
+	GRANT CREATE VIEW  To user_2;
+
+
+Ex:	How do i cancel all previllages on all objects to the user-1?
+
+	REVOKE ALL from  USER_1;
+
+
+

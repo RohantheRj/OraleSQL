@@ -1,0 +1,547 @@
+--ARITHEMATIC OPERATORS
+--RELATIONAL OPERATORS
+--SPECIAL OPERATORS
+--Relation Negation Operators
+--Logical Operators
+===============================
+Arithematic Operators:
+**********************
+
+	+	-	*	/
+
+   These are used to perform Arithematic 
+   calculations on user's own data and table data.
+
+
+DUAL:
+*****
+It is a System defined view which contains 
+only one column and it is used to perform 
+temporary calculations on users own data.
+
+Arithematic Calculations On Users data:
+***************************************
+
+Ex:	select 200+300 from dual;
+
+	500
+
+Ex:	select (90000*10)/100  "10% of 90000" from dual;
+	
+	10% of 90000
+	------------
+	9000
+
+Ex:	select 2000+(0.10*5000)-300 " After calculation" from dual;
+	2200
+
+Arithematic Calculations On Table data:
+***************************************
+
+Ex:	Display emp salaries and 2% of salary as TA?
+
+	select sal "Basic Sal", (0.02*sal) "TA"  from emp;
+
+Ex:	Display employee salaries, 2% as TA, 5% as DA, 10% as HRA, 4% as COMM  and final salary?
+
+	select Sal "Basic", (0.02*Sal) "TA", (0.05*sal) "DA", (0.10*sal) "HRA", (0.04*sal) "Comm"
+		(Sal + (0.02*Sal) + (0.05*sal) + (0.10*sal) + (0.04*sal) "Final Salary"
+	from emp;
+
+ex:
+
+select eno " EID ",Sal " Basic", (0.02*Sal) " TA", (0.05*sal) "DA", (0.10*sal) "HRA", (0.04*sal) " Comm",
+		(Sal + (0.02*Sal) + (0.05*sal) + (0.10*sal) + (0.04*sal)) " Final Salary"
+	from emp_info order by sal;
+
+Ex:
+select pname,price,
+       (0.25*price) Discount,
+        price-(0.25*price) "final price"
+from  prod_dtls;
+
+
+
+
+QUESTIONS:
+
+How can apply order by clause on multiple columns? If applied what is the affect in the output?
+[ Explain ]
+
+What is Dual and where do we use dual ?
+-------------------------------------------------------------------------------------------
+
+
+
+RELATIONAL OPERATORS:-
+**********************
+	<	>	=	<=	>=
+By using these operators , 
+we can compare values by writing conditions on
+columns.
+We can filter table data based on conditions.
+
+WHERE  clause:
+**************
+we can write conditions under this clause.
+Condition is verified in each record in the table.
+If condition is TRUE in any record , then SELECT command
+select data from that record.
+
+syntax:
+	select cl1, cl2,......,cl-n / *
+	from table_name
+	where <condition>
+	order by cl1, cl2,...,cln [asc/desc];
+
+syntax of condition:
+    colname  operator  value(s)
+
+
+
+
+Ex:	display salaries below 12000?
+
+	
+select sal "emp sal below 12000"  
+from emp_info 
+where sal < 12000;
+
+Ex:	
+Display employee details who is getting above 12000 salary?
+
+select * from emp_info 
+where sal> 12000;
+
+
+Ex:	display the details of accounting dept?
+
+select * from dept 
+where dname='ACCOUNTING';
+
+Ex:	display the details of managers?
+
+select * from emp 
+where job='MANAGER';
+
+
+Ex:	display employee name and sal of empno 7788?
+
+select ename,sal from emp 
+where empno=7788;
+
+
+Ex:	Display employee details who joined before 1st jan 1981?
+
+select * from emp 
+where hiredate < '01-jan-81';
+
+
+
+ASSIGNMENTS:
+
+CUST_DTLS
+CUST_Act_DTLS
+ACT_TYPES_INFO
+PROD_DTLS
+EMP
+DEPT
+
+
+
+
+1) Fetch all clerks information
+2) Display all departments information located at CHICAGO?
+3) Display product details manufactured in the current year only?
+4) Get the details of cutomers accounts who opened the accounts before this year?
+5) Get all SALARY account details?
+6) Display customer names and mobile numbers from the city 'Texas'?
+
+	select cname,mobile from cust_dtls where city='Texas';
+
+7) Get the information of Trading account?
+
+8) Display only Expired product details?
+	select * from prod_dtls where exp<sysdate;
+
+
+
+-------------------------------------------------------------------------------------------
+SPECIAL OPERATORS:
+******************
+BETWEEN	
+-------	
+we can write a condition based on range of values.
+
+syntax:-	
+
+select cl1, cl2,......,cl-n / *
+from table_name
+where 
+<ColumnName> 
+BETWEEN   <start_val>  AND  <end_val>
+order by cl1, cl2,...,cln [asc/desc];
+
+Note:	
+In the above syntax it includes both start value and end value.
+BETWEEN Operator supports both Numeric range and Date range
+
+
+IN
+---		
+we can write a conditon based on list of values/Multiple values 
+from a column.
+
+syntax:-	
+
+select cl1, cl2,......,cl-n / *
+from table_name
+where <ColumnName> IN(val1,val2,val3,.....)
+order by cl1, cl2,...,cln [asc/desc];
+
+Note:	
+IN operator works on Numeric, string and 
+Date type data.
+
+ 
+IS NULL
+*******		
+It used to check the column value is null or not, 
+if it is null display result.
+
+syntax:-	
+
+select cl1, cl2,......,cl-n / *
+from table_name
+where <ColumnName> IS NULL
+order by cl1, cl2,...,cln [asc/desc];
+
+Note:	
+It works on only null values and 
+it is independent of data type.
+
+
+LIKE
+****		
+we can search a char/symbol/group of chars 
+with in column values.
+
+A pattern is char or group of chars or symbol.
+
+
+syn:	
+	
+	select cl1, cl2,......,cl-n / *
+	from table_name
+	where <ColumnName> LIKE'pattern' [ESCAPE 'ch']
+	order by cl1, cl2,...,cln [asc/desc];
+
+
+LIKE operator is using  2 symbols with in the pattern.
+
+_ (underscore)	
+Represents anyone char
+
+%		
+Represents zero or any number of chars.
+
+ESCAPE 'ch'
+-----------
+It is useful to search for _ or % with in column values.
+Escape character remove the special meaning of _ or %.
+-------------------------------------------------------------------------------------------
+
+Ex:	display salaries between 2000 and 3000 in ascending order?
+
+	select sal from emp where sal between 2000 and 3000 order by sal;
+
+
+Ex:	display employee details who was joined in 1981?
+
+	select * from emp where hiredate between '01-jan-81' and '31-dec-81';
+				or
+	select * from emp where hiredate like'%81';
+
+
+Ex:	display emplyees working like clerks and managers?
+
+	select * from emp where job IN('CLERK','MANAGER');
+
+
+Ex:	display employee names and salaries who is getting any one of following salary?
+
+	1250,3000,5000
+
+	select ename,sal from emp where sal in(1250,3000,5000);
+
+
+Ex:	display employee id,name,sal,comm who is not getting comission?
+
+	select empno,ename,sal,comm from emp
+	where comm is null;
+
+
+Ex:	dispaly 3 digit salaries?
+
+	select sal from emp where sal like'___';
+
+Ex:	display names of emps begins S?
+
+	select ename from emp where ename like'S%';
+
+
+Ex:	display employees joined in 87?
+
+	select * from emp where hiredate like'%87';	
+
+22-may-87
+02-feb-87
+11-oct-87
+
+
+select * from emp;
+
+select * from emp where sal between 1000 and 2000;
+
+select * from emp where sal not between 1000 and 2000;
+
+select * from emp where hiredate between '01-jan-81' and '31-dec-81' order by hiredate;
+
+select * from emp where hiredate not between '01-jan-81' and '31-dec-81' order by hiredate;
+
+select * from emp where job in('CLERK','SALESMAN');
+
+select * from emp where job not in('CLERK','SALESMAN');
+
+select * from emp where deptno in(10,20);
+
+select * from emp where hiredate in('19-apr-87','23-jan-82') ;
+
+
+create table sample as select * from emp;
+select * from sample;
+
+update sample set deptno=null where empno in(7499,7566,7698,7788,7876,79007902,7934);
+
+--Display 3-digit salaries
+select sal from emp where sal like'___';
+
+
+--Display salaries begining with digit "2"?
+select sal from emp where sal like'2%';
+
+--Display employee names begins with "J" and ends with "S"?
+select ename from emp where ename like'J%S';
+
+--Display 4-char length employee names?
+select ename from emp where ename like'____';
+
+--Display 4-char length employee names ends with "D"?
+select ename from emp where ename like'___D';
+
+--Display employee names,salaries, hiredates joined inn the year " 81"?
+select ename,sal,hiredate from emp where hiredate like'%81';
+
+LIKE Operator with ESCAPE character:
+
+ESCAPE 'char'	It removes the meaning of a char preceeding with escape character.
+
+Ex:
+select ename from emp_info where ename like'%\_%' ESCAPE '\';
+ENAME    
+----------
+john_kenya 
+
+Ex:
+select ename from emp_info where ename like'%\%%' ESCAPE '\';
+ENAME    
+----------
+amit%mgr   
+jacks%mgr  
+
+
+
+
+RELATION NEGATION OPERATORS:
+****************************
+
+!=   (or)  <>	(NOT EQUAL TO)
+
+
+NOT BETWEEN
+
+syn:-	
+
+select cl1, cl2,......,cl-n / *
+from table_name
+where 
+<ColumnName> 
+NOT BETWEEN   <start_val>  AND  <end_val>
+order by cl1, cl2,...,cln [asc/desc];
+
+
+NOT IN
+
+syn:-	
+
+select cl1, cl2,......,cl-n / *
+from table_name
+where <ColumnName> NOT IN(val1, val2,val3,.....)
+order by cl1, cl2,...,cln [asc/desc];
+
+
+IS NOT NULL
+
+syn:-	
+
+select cl1, cl2,......,cl-n / *
+from table_name
+where <ColumnName> IS NOT NULL
+order by cl1, cl2,...,cln [asc/desc];
+
+
+NOT LIKE
+
+syn:	
+	
+	select cl1, cl2,......,cl-n / *
+	from table_name
+	where <ColumnName> NOT LIKE'pattern' [ESCAPE 'ch']
+	order by cl1, cl2,...,cln [asc/desc];
+
+
+
+
+
+Ex:	Display all emps details except SALESMAN?
+
+	select * from emp where job<>'SALESMAN';
+
+
+Ex:	Display employee details not joined in the last year?
+
+select * from emp 
+where 
+hiredate NOT BETWEEN '01-jan-14' and '31-dec-14';
+
+
+
+ASSIGNMENTS:
+
+1) Display customer account details whose balance is at least 10000 and at most 100000?
+
+2) Display unknown account details?
+
+3) Display customer details whose gender is unknown?
+
+4) Display customers from the citites 'TEXAS ' and 'CHICAGO'?
+
+5) Display Product details manufactured in january of this year?
+
+6) Display product details whose warrenty is finished in the last year?
+
+7) Display customer names having a char 'K'?
+
+8) Display customer details who is living in 6 char length cities?
+
+
+
+LOGICAL OPERATORS:
+******************
+These operators are used to specify Multiple conditions 
+under where clause.
+
+AND	It returns true if all conditions are satisfied in a record. 
+	If any one condition was failed then it will not 
+	display output.
+	
+
+
+OR	It returns true if anyone condition is true in a record. 
+	If all conditions are false then it will not 
+	display output.
+
+
+Syntax:
+	SELECT     cl1,cl2,....., / *
+	FROM       <table_name>
+	WHERE     <cond-1> 
+	                [ AND / OR ] 
+		  <cond-2> 
+              	         [ AND / OR ] 	
+		  <cond-3> 
+			 [ AND / OR ].......
+	ORDER BY cl1, cl2,...... [ ASC /DESC];
+
+
+TRUTH TABLES:
+
+AND
+		C1	C2	RESULT
+		
+		T	T	T
+		T	F	F
+		F	T	F
+		F	F	F
+
+
+OR		C1	C2	RESULT
+		
+		T	T	T
+		T	F	T
+		F	T	T
+		F	F	F
+
+
+
+Ex:	Display manager details getting above 2500 sal?
+
+	select * from emp 
+	where job='MANAGER' and sal>2500;
+
+Ex:	Display clerks and salesman details if their salary at least 1000 and atmost 1500?
+
+	select ename,sal,job from emp
+	where job in('CLERK','SALESMAN') AND sal between 1000 and 1500;
+
+
+Ex:	Display salary account details having below 100000 balance?
+
+	select * from cust_act_dtls where act_type='sal' and bal <100000;
+
+
+Assignments:
+
+Ex:	Display tablet or mobile information if their cost min 10000 and max 15000?
+
+Ex:	Display product details if they were manufactured in current year and min cost 2000 and max cost 10000?
+
+
+				CUST_ACT_DTLS
+				-------------
+ACTNO	ACT_TYPE	ACT_OPEN_DT	ACT_BAL		CUST_ID
+
+
+Ex:	Display "male" customers from "texas" and "female" customers from "chicago"?
+
+				CUST_DTLS
+				---------
+	CUST_ID		CUST_NAME	CUST_CITY	CUST_GENDER	CUST_MOBILE
+
+
+	
+
+	select * from cust_dtls
+	where (gender='male' and city='texas')
+			or
+		( gender='female' and city='chicago');
+
+EX:	Display employee details joined in 87  year or working under deptno 10?
+
+	select * from emp where hiredate like'%87' or deptno=10;
+
+
+Ex:	Display trading account details having min balance 10000  and savings account details having min balance 100000?
+
+
+-----------------------------------------------------------------------------------------

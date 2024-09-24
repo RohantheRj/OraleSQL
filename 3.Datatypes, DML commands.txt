@@ -1,0 +1,756 @@
+--What is a DATA MODEL?
+--Creating Tables
+--Naming Conventions
+--Datatypes
+--Inserting Records
+--Null values
+--Selecting data from table
+
+
+DATA MODEL:
+***********
+The graphical representation of business is known as a data model.
+Data model represents the way of implementing the data base for 
+the business.
+For any OLTP RDBMS the data model name is E-R 
+( Entity-Relationship ) Model.
+In E-R model , any object is represented with RECTANGLE, 
+each property of object represented with Ellipse
+and relation between objects represented with Rhombus.
+
+Entity	:	Any real time object is known as entity
+
+Ex	:	emp	dept	orders	transactions	sales	products	service	   		customers
+
+--For each object in the business we need to create a table.
+--Every object is having some Properties.
+--Each property name is considered as a column name.
+
+	Ex:	:	Consider emp object
+
+			Then table name is  EMP
+			Properties of emp are as follows.
+
+			eid	ename	sal	job	hiredate	gender	mailid	mobile	......
+
+
+Note	:	
+For each entity we need to create a table  and For each property of entity we need to maintain column.
+	
+Relation:	
+How business activity is working between 2 objects
+
+Ex	:	emp<-->dept;  company<-->product ;  prod<-->sales  ;  cust<-->sales;  
+
+--------------------------------------------------------------------------------------
+
+
+DDL command:
+************
+
+1) CREATE
+*********
+we can create any data base object like tables, views, 
+indexes, sequences, synonyms, users, 	
+functions, procedures, triggers, packages and so on..
+
+HOW TO CREATE  A TABLE?
+
+syntax:	
+-------
+CREATE  TABLE <table_name>
+	(
+	<colname-1> DATATYPE(size),
+	<colname-2> DATATYPE(size),
+	:	:	:	:,
+	:	:	:	:
+	);
+
+Note:
+In oracle , in a table, Max we can maintain 1000 columns.
+
+Ex:	
+write a query to create a table emp_info with columns 
+eno,ename,sal,desg,jdate,gender,mobile, mailid?
+
+    create table emp1
+	(
+	eno       number(3),
+	ename     varchar2(20),
+	sal       number(5),
+	desg      varchar2(20),
+	jdate     date,
+	gender    varchar2(7),
+	mobile    number(10),
+	mailid    varchar2(30),
+	descript   long
+	);
+
+By executing above, emp_info table structure is created 
+in data base as follows.
+
+
+
+
+Namming Rules:
+**************
+Rules to follow before specifying names
+( Object names, Column Names and Variable Names).
+
+a) Each name should begins with alphabet.
+
+b) with in the name we can use the following characters. 
+	a-z, A-Z, 0-9, @, $, # and _ ( under score)
+
+Ex:	Emp123
+	Emp_o11
+
+c) Names are not case sensitive.
+	Emp/emp/EMP all are same.	
+
+d) Duplicate names are not allowed.
+
+e) Pre defined keywords ( Reserved Words ) are not 
+    allowed as names.
+
+f) Spaces are not allowed with in a name.
+
+g) Max length of name is 30 chars.
+
+
+Ex:	valid_names	invalid_names
+	___________	______________
+	
+	prod_dtls	prod dtls--Since blank space with in the name
+	emp@sal		emp.sal----Since " . " is not valid character
+	emp123		123emp-----Since Name is not begining with alphabet
+	emp_info	emp-info---Since " -" is not valid char.
+	emp_table	table------Since " table " is a reserved word
+
+---------------------------------------------------------------------------
+Oracle Bulit-In DATATYPES
+*************************
+The data type represents the type of data allowed
+into a column and Db engine can assign memory for each value 
+entering into the column.
+
+
+I) String / Char Data types:
+----------------------------
+These data types supports alphabets, digits and symbols.
+Ex: 
+emp0101
+TS28AB1234
+pno 201, Fno 302,
+almond house
+lund ave
+rockford.
+
+1) CHAR(size)
+*************
+It is used to store fixed length character values. 
+By default the size is 1 character, and max size
+is 2000 chars or bytes.
+
+Ex:	empid     char(5)
+	--------------------
+	e0001
+	e0002
+	e0003
+
+Ex:	emp_gender     CHAR
+	------------------------
+	M
+	F
+	M
+	F
+
+2) VARCHAR2(size)
+*****************
+Used to store variable length character strings.
+No default size. we must specify size and max size is 4000 
+chars /bytes.
+
+Ex:	
+emp_names   varchar2(20)
+-------------------------------
+kiran
+madhu
+krishna
+ajay
+krishna prasad
+
+
+3) NCHAR(size)
+**************
+	To store fixed length UNICODE character values.
+	Max. size is 2000  chars/bytes.
+
+4) NVARCHAR2(size)
+******************
+	To store variable length UNICODE character values.
+	Max size is 4000 bytes or chars.
+
+5) LONG
+*******
+     It is used to store variable length char data but max size is 
+     2 GB[Giga Bytes].
+
+NOTE:	
+Only one long type column is allowed per a table.
+
+
+
+II) Numeric Data types
+**********************
+i)  NUMBER(Precesion)
+It used for rounded values.
+
+ii) NUMBER(Precesion, [Scale])
+   It is used for values with decimal point.
+
+
+"Precesion" represents max number of digits with in 
+  the value.
+"Scale" represents max number of digits after decimal 
+  point.
+
+
+Note:	The max value for precesion is 38
+	Max value of scale is 10 power -28
+
+
+Ex:   act_bal     number(10,2)
+
+	0
+	125
+	78962390.99
+	0.123--> invalid
+	.75
+	12.73
+	-275900.12
+	
+
+
+
+
+Ex:	prod_price	number(7,2)
+
+	12.75
+	123.1
+	45621.08
+	99999.99
+	125
+	0.75
+
+Ex:	123.4567--> Invalid
+	0.0972----> Invalid
+
+Ex:	empsal	number(6)
+This column will support this range of values
+-999999  to  999999
+	
+	12560
+	-100
+	0
+	-10
+	999999
+
+III) DATE data types
+********************
+i) DATE:
+********
+It is used to store date type data. 
+Oracle is having a predefined date format as follows.
+
+	DD-MON-YY  [ 29-dec-18 ]	
+
+	DD    -  Digits of date
+	MON   -  First 3 chars in month name
+	YY    -  Last 2 digits of year
+
+
+IN Oracle 11g and earlier versions,
+a)
+If yy range is from 00 to 49,
+then year is considered from current century 
+like 2000 to 2049.
+
+b)
+If yy range is from 50 to 99,
+then year is considered from Previous century 
+like 1950 to 1999.
+
+IN Oracle 12c, the default year range is 00 to 99 
+means 2000 to 2099.
+
+
+Ex:	01-jun-17
+Ex:	01/jun/17 --It is not considered as a date format--
+
+
+IV) Binary Data types
+*********************	
+These data types are useful to store unstructured data like
+images, thumb impressions, logos, video and audio files.
+
+i) RAW(size)
+*************
+Max size is 2000 bytes < 2 KB.
+
+
+ii) LONG RAW(size)
+******************
+	It is similar to RAW data type but supports 
+	max 2 GB size.
+
+NOTE:
+Only one long raw column is allowed per a table.
+	
+	
+	
+8) LOB--Large Objects
+*********************
+we can store higher volumes of data with max size 4 GB.
+
+LOB are three types.
+	
+CLOB--CHAR LOB--used to store character data
+BLOB-- BINARY LOB-- Used to store binary data
+NCLOB--Fixed length multi char large objects
+	--Used to store both binary and char data
+
+9) BFILE (BINARY FILE )
+***********************
+    It is a pointer to the external file from database.
+    WE can read data from external file and we can write data
+    on external file, through BFILE pointer.
+  
+
+	
+10) ROWID
+**********
+	It is a pseudo column /virtual column.
+	It contains physical address of each record.
+	To maintain ROWID values physically  in a table.
+
+-----------------------------------------------------------------------------------------
+
+--Inserting records in to a table
+--Inserting multiple records
+--How to deal with null values?
+--How do i see  / display / fetch  data from the tables?
+--DISTINCT clause
+
+
+
+
+
+CREATE TABLE EMP_INFO
+(
+EID   NUMBER(4),
+ENAME VARCHAR2(20),
+SAL   NUMBER(5),
+JDATE  DATE,
+DESG  VARCHAR2(20),
+GENDER CHAR
+);
+
+
+HOW TO INSERT DATA / RECORDS INTO A TABLE?
+
+
+INSERT:
+*******
+It is used to insert new records in to the table.
+
+syntax:
+-------	
+INSERT INTO <table_name> (col1, col2,. . . coln)
+VALUES(val1, val2, .......,val-n);
+
+-->In above syntax, Number of columns and number of values should be similar.
+--> Char / Varchar2 data and date type data values should be enclosed 
+      in single quotes.
+
+Note: 
+Before insert any record, we should ensure, the order of data types 
+of values should be equal to the order of datatypes of columns.
+
+Ex:
+
+insert into emp_info(eid,ename,sal,jdate,desg,gender)
+values(1111,'dinesh',75000,'23-may-14','developer','M');
+insert into emp_info(eid,ename,sal,jdate,desg,gender)
+values(1112,'madhu',30000,'23-may-14','developer','F');
+insert into emp_info(eid,ename,sal,jdate,desg,gender)
+values(1191,'xavier',10000,'02-feb-10','clerk','M');
+
+insert into emp_info
+values(1110,'john',11700,'23-may-14','developer','M');
+
+insert into emp_info
+values(1121,'dilroop',61000,'21-oct-13','developer','F');
+
+insert into emp_info
+values(1120,'abhi',10000,'23-may-14','admin','M');
+
+insert into emp_info 
+values('mahitha',23000,'developer','F');
+
+Error:  Not enough values
+
+--Inserting null values IMPLICITLY
+insert into emp_info(ename,sal,desg,gender) 
+values('mahitha',23000,'developer','F');
+
+--Inserting null values EXPLICITLY
+insert into emp_info 
+values(NULL,'smitha',33000,null,'developer','F');
+
+insert into emp_info(ename,sal)
+values('dinesh','75000');
+
+
+
+-----------------------------------------------------------------------------------------
+
+Inserting records using " & " (substitution)operator:
+-----------------------------------------------------
+
+& is known as "Substitution operator". 
+It indicates the address of column with in the data base.
+This is "Inserting values at Run Time".
+
+Syntax:
+
+insert  into  <tablename>
+values('&col1','&col2','&col3',. . . . . . . . );
+
+Ex:
+	
+insert into emp_info
+values(&eid,'&ename',&sal,'&jdate','&desg','&gender');
+
+	enter value for eid: 	232
+	enter value for ename:	hari
+	enter value for sal:		23000
+	enter value for desg: 	admin
+	enter value for join_date:	21-may-10
+		:	:
+		:	:
+	
+	1 row created.
+
+In sql * plus window
+
+	sql> /  [ to re-execute the recent command ]
+
+	enter value for eno: 	454
+	enter value for ename:	abc
+	enter value for sal:	13000
+	enter value for desg: 	analyst
+	enter value for join_date:21-may-10
+		:	:
+		:	:
+	
+	1 row created.
+
+
+	sql > / [ enter ]
+
+
+In SQL DEVELOPER OR TOAD OR PL/SQL DEVELOPER, 
+use select the insert command and press F5
+
+	enter value for eno: 	
+	enter value for ename:	
+	enter value for sal:	
+	enter value for desg: 	
+	enter value for join_date:
+		:	:
+		:	:
+
+---------------------------------------------------------------------
+INSERT ALL
+**********
+INSERTING MULTIPLE RECORDS AT A TIME INTO 
+SINGLE TABLE / MULTIPLE TABLES:
+
+SYN:
+Insert All
+ Into <tbl_1> 
+ values(. . . . .)
+ Into <tbl_1>
+ values(. . . . .)
+-----
+-----
+Into <tbl_2>
+ values(. . . . .)
+ Into <tbl_2>
+ values(. . . . .)
+----
+----
+(select * from dual );
+
+
+
+INSERT ALL 
+  INTO EMP_INFO
+  VALUES('2121','JAYMIN',5000,'11-OCT-16','ADMIN','M')
+  INTO EMP_INFO(EID,ENAME,SAL,JDATE,DESG,GENDER)
+  VALUES('2323','SWETHA',15000,'21-OCT-16','ADMIN','F')
+  INTO EMP_INFO(EID,ENAME,SAL,JDATE,DESG,GENDER)
+  VALUES('2021','ROCKY',25000,'11-OCT-16','ADMIN','M')
+into  cust
+values('11','hari','hyd')
+into  cust
+values('22','goel','Chennai')
+into cust
+values('33','madhu','delhi')
+  (select * from dual);
+	
+
+
+-----------------------------------------------------------------------------------------
+
+NULL VALUE:
+***********
+	A missed value is known as null value.
+	Null value is not equal to zero or space or
+	other null values.
+
+INSERTING NULL VALUES:  2 WAYS
+
+1) Implicit insertion:
+
+	If we miss a value in a column the it dynamically maintains 
+	a null value at that place.
+	To insert like this, we need to specify column names while 
+	using insert command.
+
+
+Ex:	Insert into emp_info(eid,ename,sal,desg)
+	values(1119,'john',12000,'salesman');
+
+2) Explicit insertion:
+
+Use NULL keyword at the place of missed values.
+Here no need to maintain column names while inserting data.
+
+Ex:	
+	
+
+Insert into emp_info
+values(1234,'martin',12000,null,'salesman',null);
+
+------------------------------------------------------------------------------------------------------------------------
+
+HOW TO DISPLAY TABLE STRUCTURE?
+
+A table structure contains column names, 
+data types and sizes.
+
+EX: 	describe   emp_info;
+
+		or
+	desc emp_info;
+
+HOW TO DISPLAY LIST OF TABLE NAMES?
+
+EX:	SELECT * FROM TAB;
+
+  Q: 
+   What is the meaning of tab?
+   Tab means table space, which contains list of tables 
+   created under current schema.
+
+CL SCR;
+It is used to clear the screen.
+
+SET LINESIZE 140;
+It is used to increase output line length.
+
+----------------------------------------------------------------------------------------
+DATA RETRIEVAL LANGUAGE/ DATA QUERY LANGUAGE
+
+SELECT
+******
+This command is used to display / fetch / retrieve /select 
+data from table or view.
+
+syntax:	
+SELECT   col1, col2,...., coln / * 
+FROM  table_name / View_name;
+
+NOTE:	
+In above syntax , * represents all columns.
+
+
+Ex:	Desc  emp_info;
+
+output:
+
+Name   Null Type         
+------ ---- ------------ 
+EID         NUMBER(4)    
+ENAME       VARCHAR2(20) 
+SAL         NUMBER(5)    
+JDATE       DATE         
+DESG        VARCHAR2(20) 
+GENDER      CHAR(1)      
+
+
+
+
+ex:	Display employee names?
+
+	select ename from emp_info;
+
+output:
+
+ENAME              
+--------------------
+dinesh rao           
+smitha panday        
+madhu                
+madhu                
+Allen                
+king                 
+torjan               
+john                 
+martin               
+
+ 9 rows selected 
+
+Ex:	Get emplyee id, names and salaries?
+
+	select eno, ename, sal from emp_info;
+
+output:
+
+ ENO 		ENAME                SAL
+---------- -------------------- ----------
+       111 dinesh rao                34000 
+       222 smitha panday             44000 
+       333 madhu                     20000 
+       333 madhu                     20000 
+       444 Allen                     34000 
+       555 king                      21000 
+       666 torjan                    11000 
+       777 john                      12000 
+       999 martin                    12000 
+
+ 9 rows selected 
+
+
+	
+
+Ex:	Display column data in user required order-->( Instead of Physical order )
+
+	Display employee join_dates, ename, designitions and salaries?
+
+	select join_date, ename, desg,sal from emp_info;
+
+output:
+
+JOIN_DATE ENAME                DESG                        SAL
+--------- -------------------- -------------------- ----------
+12-MAY-10 dinesh rao           developer                 34000 
+12-MAY-10 smitha panday        developer                 44000 
+21-OCT-11 madhu                admin                     20000 
+21-OCT-11 madhu                admin                     20000 
+          Allen                developer                 34000 
+16-OCT-12 king                 salesman                  21000 
+11-MAY-12 torjan               clerk                     11000 
+          john                 salesman                  12000 
+          martin               salesman                  12000 
+
+ 9 rows selected 
+
+Ex:	display employee details?
+
+	select * from emp_info;
+
+output:
+
+ENO 		ENAME               SAL 	DESG            JOIN_DATE GENDER      MOBILE 	MAILID                       
+---------- -------------------- ---------- -------------------- --------- ------- --------------------------------------
+       111 dinesh rao                34000 developer            12-MAY-10 male    7878787878 dinesh@hotmail.com             
+       222 smitha panday             44000 developer            12-MAY-10 female  7878787878 smith_p@hotmail.com            
+       333 madhu                     20000 admin                21-OCT-11 male    5656565656 madhu@yahoo.com                
+       333 madhu                     20000 admin                21-OCT-11 male    5656565656 madhu@yahoo.com                
+       444 Allen                     34000 developer                      male    8989898989                                
+       555 king                      21000 salesman             16-OCT-12 male    7867676767                                
+       666 torjan                    11000 clerk                11-MAY-12 male    1111111111 t@yahoo.com                    
+       777 john                      12000 salesman                                                                         
+       999 martin                    12000 salesman                                                                         
+
+ 9 rows selected 
+
+
+
+
+
+DISPLAYING COLUMN DATA WITH USER DEFINED TITLES:
+----------------------------------------------------------------------
+
+By default column names are the titles in the output.
+
+syn:-1
+	select colname  "title", colname "title"...
+	from table;
+
+syn:-2
+	select colname AS "title", colname AS "title"...
+	from table;
+
+Note: 
+In above 2 cases we can also maintain space with in the 
+title.        
+
+Syn:-3
+	select colname  title, colname  title...
+	from table;
+
+
+	
+Ex:	select ename "Employee Name", desg " Job of Employee"
+	from employee_info;	
+
+
+employee name         job of employee   
+-------------------- --------------------
+dinesh rao           developer            
+smitha panday        developer            
+madhu                admin                
+madhu                admin                
+Allen                developer            
+king                 salesman             
+torjan               clerk                
+john                 salesman             
+martin               salesman             
+
+ 9 rows selected 
+	
+
+Ex:
+select mobile "Phone_number",desg "Job Title",eno "EmpId",ename "EmpNames" from emp_info
+
+select mobile Phone_number,desg JobTitle,eno EmpId,ename "EmpNames" from emp_info
+
+select mobile As Phone_number,desg As JobTitle,eno AS  EmpId,ename as "EmpNames" from emp_info
+
+Assignments:
+------------
+i) Create a table Item_dtls ( Electronics )
+
+ii) Create a table Sales_dtls
+
+iii) create a table manufacturers
+
+iv) Try to insert at least 10 records in the above tables
+
+v) Try to insert at least 2 records with null values
+
+------------------------------------------------------------------------------------------------------

@@ -1,0 +1,235 @@
+Topics:
+
+ SQL and Its commands
+ How to create User Accounts
+ How to connect / logon Database
+
+
+		
+		SQL ( Structured query language )
+		----------------------------------
+Def:	
+It is a collection of pre defined commands, Operators, concepts, 
+clauses, objects and Built in functions.
+
+	It is the own language of any data base. 
+	It is used to communicate with any database.
+	By using this language we can write english like statements,
+	called QUERIES.
+	We will write these queries in any client tool and execute them, 
+	then we will get result from database.
+------------------------------------------------------------------------------------------
+CLIENT TOOLS:
+*************
+
+SQL*PLUS:-
+**********
+SQL * PLUS is a default client tool and acts as an interface between client user
+and database.
+
+
+	          request		processed on
+	Developer----------> SQL * PLUS----------------> DB
+		  Query			         	|
+			      output	         	|
+		  	       <------------------------V
+
+
+-->Sql * plus is a client tool to interact with ORACLE DB /any DB
+-->Sql * plus is to be installed in to the system whenever we have installed 
+	the db software.
+-->Client [ Technical ] request is submitted in the form of "Queries".
+-->Queries are executed by SQL STMT EXECUTOR ( Under Oracle Db Engine )
+-->Queries are executed against database and output will be displayed on 
+	the sql * plus window.
+
+
+Features of Queries under sql * plus:
+*************************************
+--At a time only one query is allowed to execute.
+--sql queries are not case sensitive.
+--Each query is terminated with ;
+--SQL commands are ANSI standard 
+   ( American National standard institute ).
+  So SQL commands are universally accepted by any RDBMS.
+
+
+
+---- How to open SQL * PLUS?
+---- In oracle 11g Enterprise Edition
+	START--->PROGRAMS---> ORACLE_ORAHOME11g--->APPLICATION DEVELOPMENT--->         	          --->SQLPLUS
+     
+     In sql * plus window we should enter username and password
+
+---- In Oracle 12c  
+	START-->PROGRAMS-->ORACLE-->APPLICATION DEVELOPMENT-->SQLPLUS
+
+
+---Other Client tools:
+    These tools are GUI tools.
+	SQL DEVELOPER
+	PLSQL DEVELOPER
+	TOAD
+------------------------------------------------------------------------------------------
+
+LOG ON PROCEDURE:
+
+
+HOW TO CREATE USER ACCOUNT IN ORACLE-12c ?
+DBA Will create user account
+
+NAVIGATION to open sql * plus:
+
+START
+  |
+  V
+Programs
+  |
+  V
+select Oracle Folder
+  |
+  V
+application development
+  |
+  V
+Select SQL PLUS
+
+It will open sql * plus window
+
+Enter username and password of DBA.
+
+1) In this window submit
+username:------- ( system )
+password:------- ( manager123 )
+
+sql>
+
+Note:
+
+1) TO DISPLAY CURRENT USERNAME?
+
+SHOW USER;
+
+system
+
+2) TO DISPLAY CURRENT DATA BASE NAME?
+
+SHOW CON_NAME;
+
+CDB$ROOT ( default container name in oracle 12c)
+
+3) Switch in to PLUGGABLE DATABASE
+
+ALTER SESSION SET CONTAINER=PDBORCL;
+
+4) show con_name;
+PDBORCL
+
+5) Creating user account under PDBORCL?
+
+CREATE USER <username> IDENTIFIED BY <password>
+QUOTA <size> M ON USERS;
+
+Ex:
+CREATE USER DINESH IDENTIFIED BY WELCOME
+QUOTA 100M ON USERS;
+
+user created.
+
+6) Granting resources to the user DINESH?
+
+GRANT RESOURCE,CONNECT TO DINESH;
+
+grant succeeded.
+
+7) connecting to database ( PDBORCL ) as DINESH?
+
+SQL> CONN  DINESH/WELCOME@PDBORCL;
+
+-----------------------------------------------------------------------------------
+	CREATING  USER ACCOUNT UNDER Oracle 11g 
+	***************************************
+Open sql * plus 
+
+1) connect as DBA?
+
+username:  system
+password:  manager
+
+2) creating user account?
+
+CREATE USER DINESH IDENTIFIED BY WELCOME;
+
+3) Granting resources to DINESH?
+
+GRANT RESOURCE,CONNECT TO DINESH;
+
+4) connect as dinesh?
+
+CONN DINESH/WELCOME (enter )
+
+
+HOW TO DELETE USER ACCOUNT?
+
+a) connect as DBA
+b) DROP USER DINESH cascade;
+------------------------------------------------------------------------------------------
+
+	SQL COMMANDS
+	------------
+SQL is divided into 5 types of Sub Languages based on nature of commands.
+ 
+
+Sub Languages
+-------------
+DDL
+DML
+DCL
+TCL
+DQL/DRL
+
+
+
+1) DDL ( data definition language ) commands:
+
+Used to create or change or delete any data base objects
+
+CREATE		ALTER  		DROP	
+TRUNCATE	RENAME
+
+2) DML ( data manipulation language )COMMANDS
+
+Used to  enter new data/ changing old data / deleting the data
+from table.
+
+INSERT		UPDATE		DELETE		
+	
+3) DRL/DQL ( data retreival/Query language) Command
+
+	SELECT ( logical command )
+
+
+4) DCL ( DATA CONTROL LANGUAGE ) COMMANDS
+
+Used to control the access of data base objects . 
+These commands are used by DBA ( database administrator )
+
+	GRANT		REVOKE
+
+
+5) TCL ( TRANSACTION CONTROL LANGUAGE )COMMANDS
+
+Used to save or cancel the actions made on table data.
+
+COMMIT		ROLLBACK		SAVEPOINT
+
+
+				
+----------------------------------------------------------------------------------------Questions:
+What is multitenancy?
+What is a pluggable database?
+Advantages of oracle 12c
+What are the types of RDBMS?
+
+
+

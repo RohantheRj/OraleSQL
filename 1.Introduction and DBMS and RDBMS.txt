@@ -1,0 +1,228 @@
+				
+TOPICS:
+
+--What is Oracle?
+--Why is Oracle?
+--How data is generating?
+--What is a Business?
+--How data is important and 
+  useful for any Business?
+--Database concepts
+--Advantages of RDBMS
+--Oracle Versions
+--What is oracle 12c?
+--What is Multitenant database?
+--Advantages of 12c?
+--Course Structure
+
+
+			ORACLE
+			------
+-->ORACLE  is an RDBMS( RELATIONAL DATA BASE MANAGEMENT SYSTEM )
+-->RDBMS is a software through which we can store data, access data
+   and manage business data.
+-->Oracle is an RDBMS s/w product from oracle corporation.
+
+Ex of RDBMS: 
+------------
+ORACLE
+SQL SERVER
+DB2
+INGRESS
+MANGO DB
+MYSQL
+TERADATA. . . etc
+
+
+
+--How the data is going to be generated?
+
+				
+		BUSINESS
+		   |
+--------------------------------------------------------
+|		|	    |		|
+{emps	        depts	Products/      customers}
+			services
+[ Known as entities / Objects ]
+
+
+What is a business?
+Business is a collection of entities and its activities.
+
+In early days of a business, we have very limited like
+
+--limited number of emps
+--limited depts
+--limited products
+--limited customers
+
+Day-By-Day the business may improve, then we have the 
+increasing of data size. 
+In this case we need the automated system called DBMS, 
+to maintain business data automatically.
+
+
+DATA BASE CONCEPTS:
+*******************
+DATA:
+collection of information of one Business entity is known 
+as data.
+
+Ex:	one employee information
+	one product information
+	one sales transaction information
+
+
+DATA BASE:
+**********
+It is a software which stores and manages the collection 
+of information of all objects in the business.	
+It is a collection of programs and each program is 
+specific for performing a task.
+
+
+DATABASE MANAGEMENT SYSTEM:
+***************************
+DB which is combined with management system services is 
+known as DBMS.
+Here the services are
+
+	--Entering new data
+	--updating old data with new data
+	--Deleting unwanted data
+	--Authenticating the users
+	--Providing security.
+
+
+RDBMS:
+******
+Author of RDBMS IS E.F. CODD and he invented 12 Rules 
+for an RDBMS.
+Collection of information of all related objects with 
+in the business is known as RDBMS.
+The relation between the tables is implemented by using 
+Referential integrity constraints.
+
+In any RDBMS
+--data stored in the form of 2-dimensional tables
+--A table is a collection of rows and columns.
+--A row is known as record ( collection of columns)
+--A column is known as a field.
+
+
+
+		
+History of Oracle:
+******************
+
+ORACLE
+	oracle is s/w developed by oracle corp. 
+	established in 1977 ( Relational s/w incorp.)
+	In 1979 it became as ORACLE CORP.
+	The commercial version of oracle DB s/w was 
+	released in 1986.
+
+
+oracle-7	
+	It is a stand alone rdbms, it is not supporting online 
+	processing.
+oracle-8
+	It is a stand alone rdbms, and it is having indexes.
+
+oracle-8i
+	it is supporting internet applications like webpages 
+	( html / java)
+	It supports online data processing.
+
+oracle-9i
+	It is also supporting internet applications
+	It supports online data processing
+	It supports e-buz development tools 
+	(ERP--Enterprise Resource Planning-- 
+	[Oracle Apps] MOdules )
+
+
+oracle-10g ( grid technology )
+	A grid is nothing but a mesh like architecture. 
+	Each crossection point in the mesh, is considered 
+	as server.
+	Each server is connected with at least one server 
+	with in the grid.
+
+advantage:
+	Then there is no communication gap between the 
+	DB servers
+	And we can process the business data in 
+	centralized manner.
+
+
+			business
+			  |
+		-----------------------------------------
+		|			|
+		branch-1		branch-2
+		server-abc		server-xyz
+
+
+
+		X1------X2------X3
+		|	|        |
+		|	|        |
+		X4------X5------X6
+		|	|        |
+		|	|        |
+		X7------X8------X9
+	
+	
+
+oracle-11g ( grid technology )
+	It is having in built data warehouse builder. 
+	( OWB-tool [ Oracle Warehouse Builder ] )
+
+
+
+oracle-12c ( supporting cloud computing )
+	It is a multitenant database. 
+	It will reduce cost of business implementation.
+	Sharing of tech and data is easy.
+
+Oracle-18c
+	It is known as Autonomous cloud database.
+	
+
+
+
+		ORACLE (OLTP--rdbms)
+			  |
+----------------------------------------------------------------
+	|					|
+        SQL           		       		PL/SQL
+	( queries against db)		( programs against db)
+					--Programs
+	commands			--procedures
+	--DDL				--functions
+	--DML				--triggers
+	--DCL				--packages
+	--TCL				--cursors
+	--DQL /DRL                 
+	operators			--exceptions
+	clauses( distinct, where	--conditional stmts
+		 order by,		--loops
+		 group by,		--CASE
+		having)			--Collections 
+					( VARRAYS, Associative Arrays,
+					Nested Tables/PLSQL TABLES)
+					--BULK COLLECT
+	Tables				--BULK BIND
+	Clusters			--FORALL
+	indexes
+	views
+	sequences
+	synonymns				
+	constraints--Concept			
+	joins--------Concept
+	subqueries---concept
+	functions+Analytical Functions
+
+	
